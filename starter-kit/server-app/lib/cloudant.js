@@ -17,7 +17,7 @@ var cloudant = new Cloudant({
 
 // Cloudant DB reference
 let db;
-let db_name = "community_db";
+let db_name = "mobtrack_db";
 
 /**
  * Connects to the Cloudant DB, creating it if does not already exist
