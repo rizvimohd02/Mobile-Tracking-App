@@ -15,33 +15,12 @@ import AddResource from './src/screens/resource-add';
 import EditResource from './src/screens/resource-edit';
 import MyResources from './src/screens/resources-my';
 import Map from './src/screens/map';
+import MyLocation from './src/screens/location-my';
 
-import { HomeIcon, DonateIcon, SearchIcon } from './src/images/svg-icons';
+import { HomeIcon, LocationIcon, DonateIcon, SearchIcon } from './src/images/svg-icons';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
-
-const ResourcesStackOptions = ({ navigation }) => {
-  return ({
-    headerRight: () => (
-      <Button
-        onPress={() => navigation.navigate('Chat')}
-        title='Chat '
-      />
-    )
-  });
-};
-
-const DonationsStackOptions = ({ navigation }) => {
-  return ({
-    headerRight: () => (
-      <Button
-        onPress={() => navigation.navigate('Add Donation')}
-        title='Add '
-      />
-    )
-  });
-};
 
 const tabBarOptions = {
   // showLabel: false,
@@ -66,34 +45,18 @@ const TabLayout = () => (
       }}
     />
     <Tab.Screen
-      name='Donate'
-      component={DonateStackLayout}
+      name='Get Location'
+      component={GetLocationStackLayout}
       options={{
-        tabBarIcon: ({color}) => (<DonateIcon fill={color} />)
-      }}
-    />
-    <Tab.Screen
-      name='Search'
-      component={SearchStackLayout}
-      options={{
-        tabBarIcon: ({color}) => (<SearchIcon fill={color} />)
+        tabBarIcon: ({color}) => (<LocationIcon fill={color}/>)
       }}
     />
   </Tab.Navigator>
 );
 
-const DonateStackLayout = () => (
+const GetLocationStackLayout = () => (
   <Stack.Navigator>
-  <Stack.Screen name='My Donations' component={MyResources} options={DonationsStackOptions} />
-    <Stack.Screen name='Add Donation' component={AddResource} />
-    <Stack.Screen name='Edit Donation' component={EditResource} />
-  </Stack.Navigator>
-);
-
-const SearchStackLayout = () => (
-  <Stack.Navigator>
-    <Stack.Screen name='Search Resources' component={SearchResources} options={ResourcesStackOptions} />
-    <Stack.Screen name='Chat' component={Chat} />
+    <Stack.Screen name='My Location' component={MyLocation} />
     <Stack.Screen name='Map' component={Map} />
   </Stack.Navigator>
 );
