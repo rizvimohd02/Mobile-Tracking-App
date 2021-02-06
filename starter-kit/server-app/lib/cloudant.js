@@ -151,17 +151,17 @@ function deleteById(id, rev) {
  * @return {Promise} - promise that will be resolved (or rejected)
  * when the call to the DB completes
  */
-function create(type, name, description, quantity, location, contact, userID) {
+function create(name, description, location, contact, userID) {
     return new Promise((resolve, reject) => {
         let itemId = uuidv4();
         let whenCreated = Date.now();
         let item = {
             _id: itemId,
             id: itemId,
-            type: type,
+            //type: type,
             name: name,
             description: description,
-            quantity: quantity,
+            //quantity: quantity,
             location: location,
             contact: contact,
             userID: userID,
