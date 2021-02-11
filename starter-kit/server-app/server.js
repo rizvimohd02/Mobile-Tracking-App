@@ -117,6 +117,34 @@ app.post('/api/resource', (req, res) => {
     .catch(err => handleError(res, err));
 });
 
+/**
+ * Get the location of all devices
+ *
+ * The query string may contain the following qualifiers:
+ * 
+ * - name
+ * - trnsctype
+ *
+ * A list of devices location objects will be returned (which can be an empty list)
+ */
+app.get('/api/resource', (req, res) => {
+
+  const name = req.query.name;
+  const trnsctype = req.query.trnsctype;
+
+  cloudant
+    .find(name, trnsctype)
+    .then(data => {
+      if (data.statusCode != 200) {
+        res.sendStatus(data.statusCode)
+      } else {
+        res.send(data.data)
+      }
+    })
+    .catch(err => handleError(res, err));
+});
+
+
 const server = app.listen(port, () => {
    const host = server.address().address;
    const port = server.address().port;
