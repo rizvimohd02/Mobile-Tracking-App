@@ -71,6 +71,44 @@ const dbCloudantConnect = () => {
 })();
 
 /**
+ * Find all records that match the specified transaction type.
+ * 
+ * @param {String} partialName
+ * @param {String} trnsctype
+ * 
+ * @return {Promise} Promise - 
+ *  resolve(): all resource objects that contain the partial
+ *          name, place or userID provided, or an empty array if nothing
+ *          could be located that matches. 
+ *  reject(): the err object from the underlying data store
+ */
+function find(partialName, trnsctype) {
+    return new Promise((resolve, reject) => {
+        let selector = {}
+        
+            if (partialName) {
+                let search = `(?i).*${partialName}.*`;
+                selector['name'] = {'$regex': search};
+            }    
+
+             if (trnsctype) {
+                selector['trnsctype'] = trnsctype;
+            }      
+        
+        db.find({ 
+            'selector': selector
+        }, (err, documents) => {
+            if (err) {
+                reject(err);
+            } else {
+                resolve({ data: JSON.stringify(documents.docs), statusCode: 200});
+            }
+        });
+    });
+}
+
+
+/**
  * Create a resource with the specified attributes
  * 
  * @param {String} name - the name of the associate
@@ -118,6 +156,7 @@ function info() {
 };
 
 module.exports = {
+    find: find,
     create: create,
     info: info
   };
